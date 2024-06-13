@@ -1,0 +1,7 @@
+InsightsMetrics
+| where TimeGenerated > ago(30d)
+| where Namespace == "Memory"
+| where Name == "AvailableMB"
+| extend memorySizeMB = round(toreal(parse_json(Tags).["vm.azm.ms/memorySizeMB"]))
+| summarize Avg=avg(Val) by Computer
+| top 20 by Avg asc

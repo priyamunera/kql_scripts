@@ -1,0 +1,4 @@
+where type == "microsoft.compute/virtualmachines" or type=="microsoft.classiccompute/virtualmachines"
+| summarize VMCount=count()
+| extend ['Count (Virtual Machines)']=VMCount
+| project ['Count (Virtual Machines)']

@@ -1,0 +1,9 @@
+AzureActivity
+| where _ResourceId contains "/providers/microsoft.compute/virtualmachines/"
+| where OperationNameValue =~ "Microsoft.Resourcehealth/healthevent/Updated/action"
+    or OperationNameValue =~ "Microsoft.Resourcehealth/healthevent/InProgress/action"
+    or OperationNameValue =~ "Microsoft.Resourcehealth/healthevent/Resolved/action"
+    or OperationNameValue =~ "Microsoft.Resourcehealth/healthevent/Activated/action"
+| where Properties contains "Reboot initiated from inside the machine"
+| project TimeGenerated, _ResourceId
+| order by TimeGenerated

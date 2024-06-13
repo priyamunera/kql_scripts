@@ -1,0 +1,5 @@
+where type == "microsoft.compute/disks"
+| summarize DiskCount=count() by State=tostring(properties.diskState)
+| order by DiskCount desc
+| extend ["Count (Disks)"]=DiskCount
+| project State, ["Count (Disks)"]

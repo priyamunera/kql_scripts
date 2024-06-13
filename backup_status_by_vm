@@ -1,0 +1,9 @@
+CoreAzureBackup 
+| where TimeGenerated > ago(24h)
+| where OperationName == "BackupItem"
+| where BackupItemType == "VM"
+//Remove duplicate records if any
+| summarize arg_max(TimeGenerated, *) by BackupItemFriendlyName
+//Summarize by Job Status
+| summarize count() by BackupItemFriendlyName, BackupItemProtectionState, TimeGenerated 
+| sort by BackupItemFriendlyName asc 

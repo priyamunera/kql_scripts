@@ -1,0 +1,5 @@
+InsightsMetrics
+| where Namespace == "Processor"
+| where Name == "UtilizationPercentage"
+| summarize Avg = avg(Val) by Computer
+| top 20 by Avg

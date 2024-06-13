@@ -1,0 +1,6 @@
+where type == "microsoft.compute/virtualmachines"
+| extend OSType = iff(type == "microsoft.compute/virtualmachines", tostring(properties.storageProfile.osDisk.osType),tostring(properties.storageProfile.operatingSystemDisk.operatingSystem)) 
+| summarize VMCount=count() by OSType
+| order by VMCount desc
+|extend ['Count (Virtual Machines)']=VMCount
+| project OSType, ['Count (Virtual Machines)']
